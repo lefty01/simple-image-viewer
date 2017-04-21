@@ -32,13 +32,5 @@ router.get('/', function(req, res, next) {
 
 });
 
-router.get('/images', function(req, res, next) {
-    get_images(path, function(err, items) {
-      if (! err) {
-        res.send(items);
-      }
-      console.log('get /images error: ' + err);
-    });
-});
 
 module.exports = router;
