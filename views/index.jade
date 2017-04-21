@@ -1,0 +1,37 @@
+extends layout
+
+block headjs
+  script(type="text/javascript", src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
+  script(type="text/javascript", src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous")
+
+block content
+  h1= title
+
+
+
+  .container
+      .row
+          .span12
+              .well
+                  #myCarousel.carousel.fdi-Carousel.slide
+                      #eventCarousel.carousel.fdi-Carousel.slide(data-interval="0")
+                          .carousel-inner.onebyone-carosel
+                                - for (var i = numimages - 1; i >= 0; --i) {
+                                if i == (numimages - 1)
+                                    .item.active
+                                        .col-md-4
+                                            a(href="#")
+                                                img.img-responsive.center-block(src= images[i])
+                                            .text-center= i
+                                else
+                                    .item
+                                        .col-md-4
+                                            a(href="#")
+                                                img.img-responsive.center-block(src= images[i])
+                                            .text-center= i
+  
+                                - }
+
+                            a.left.carousel-control(href="#eventCarousel", data-slide="prev")
+                            a.right.carousel-control(href="#eventCarousel", data-slide="next")
+
