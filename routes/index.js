@@ -1,8 +1,31 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+var chokidar = require('chokidar');
 
 var path = 'public/images';
+
+var watcher = chokidar.watch(path, 'file', {
+    ignored: /[\/\\]\./,
+    persistent: true,
+    depth: 1
+});
+
+
+function new_image_added(path) {
+
+}
+
+watcher.on('add', function(path) {
+    console.log('File: ', path, 'has been added');
+// symlink latest.jpg to path
+// how to trigger page reload ... or actually update img.src content dynamically
+});
+
+
+//app.get('/images/latest.jpg', function (req, res) {
+//    res.sendfile(path.resolve('images/latest.jpg'));
+//});
 
 // fixme: check for readdir error if path not exist ENOENT
 function get_images(path, callback) {

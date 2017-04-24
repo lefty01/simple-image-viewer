@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
     $('#myCarousel').carousel({
-        interval: 10000
+        interval: 0
     })
     $('.fdi-Carousel .item').each(function () {
         var next = $(this).next();
