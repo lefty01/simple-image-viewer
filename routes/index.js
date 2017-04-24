@@ -1,9 +1,25 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var User = mongoose.model('Users');
-
+var Users = mongoose.model('Users');
+var passport = require('passport');
 var fs = require('fs');
+var chokidar = require('chokidar');
+
+
+var watcher = chokidar.watch(path, 'file', {
+    ignored: /[\/\\]\./,
+    persistent: true,
+    depth: 1
+});
+
+
+watcher.on('add', function(path) {
+    console.log('File: ', path, 'has been added');
+// symlink latest.jpg to path
+// how to trigger page reload ... or actually update img.src content dynamically
+});
+
 
 var path = 'public/images';
 
@@ -29,11 +45,47 @@ router.get('/', function(req, res, next) {
   get_images(path, function(err, items) {
     if (! err) {
       var size = items.length;
-      res.render('index', { title: 'Doorcam', images: items, numimages: size });
+	res.render('index', { title: 'Doorcam', images: items, numimages: size, user: req.user });
     }
   });
 
 });
+
+
+
+
+router.get('/register', function(req, res) {
+    res.render('register', { });
+});
+
+router.post('/register', function(req, res) {
+    Users.register(new Users({ username : req.body.username }), req.body.password, function(err, account) {
+        if (err) {
+            return res.render('register', { account : account });
+        }
+
+        passport.authenticate('local')(req, res, function () {
+            res.redirect('/');
+        });
+    });
+});
+
+  router.get('/login', function(req, res) {
+      res.render('login', { user : req.user });
+  });
+
+  router.post('/login', passport.authenticate('local'), function(req, res) {
+      res.redirect('/');
+  });
+
+  router.get('/logout', function(req, res) {
+      req.logout();
+      res.redirect('/');
+  });
+
+  router.get('/ping', function(req, res){
+      res.send("pong!", 200);
+  });
 
 
 module.exports = router;
