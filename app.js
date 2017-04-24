@@ -1,13 +1,53 @@
+// simple image viewer ...
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+//var basicAuth = require('express-basic-auth')
+var passport = require('passport');
+var Strategy = require('passport-local').Strategy;
+var session = require('express-session');
+//var mongoose = require('mongoose');
+//var User = mongoose.model('User');
+
+var db = require('./model/db');
 
 var routes = require('./routes/index');
 
 var app = express();
+
+var sessionOpt = {
+    secret: 'hund Cat maus',
+    cookie: {},
+    resave: false,
+    saveUninitialized: false
+};
+
+
+passport.use(new Strategy(
+  function(userid, passwd, cb) {
+    Users.findOne({ 'userid': userid }, function(err, user) {
+      if (err) { return cb(err); }
+      if (!user) { return cb(null, false); }
+      if (user.passwd != passwd) { return cb(null, false); }
+      return cb(null, user);
+    });
+}));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  db.users.findById(id, function (err, user) {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,7 +59,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session(sessionOpt));
 app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 app.use('/', routes);
 
