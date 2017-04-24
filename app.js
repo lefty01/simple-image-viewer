@@ -10,10 +10,10 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var session = require('express-session');
-//var mongoose = require('mongoose');
-//var User = mongoose.model('User');
+var mongoose = require('mongoose');
 
 var db = require('./model/db');
+var Users = mongoose.model('Users');
 
 var routes = require('./routes/index');
 
@@ -27,26 +27,32 @@ var sessionOpt = {
 };
 
 
-passport.use(new Strategy(
-  function(userid, passwd, cb) {
-    Users.findOne({ 'userid': userid }, function(err, user) {
-      if (err) { return cb(err); }
-      if (!user) { return cb(null, false); }
-      if (user.passwd != passwd) { return cb(null, false); }
-      return cb(null, user);
-    });
-}));
+// passport config
+passport.use(new Strategy(Users.authenticate()));
+passport.serializeUser(Users.serializeUser());
+passport.deserializeUser(Users.deserializeUser());
 
-passport.serializeUser(function(user, cb) {
-  cb(null, user.id);
-});
 
-passport.deserializeUser(function(id, cb) {
-  db.users.findById(id, function (err, user) {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
-});
+// passport.use(new Strategy(
+//     function(userid, passwd, cb) {
+// 	Users.findOne({ 'userid': userid }, function(err, user) {
+// 	    if (err) { return cb(err); }
+// 	    if (!user) { return cb(null, false); }
+// 	    if (user.passwd != passwd) { return cb(null, false); }
+// 	    return cb(null, user);
+// 	});
+// }));
+
+// passport.serializeUser(function(user, cb) {
+//   cb(null, user.id);
+// });
+
+// passport.deserializeUser(function(id, cb) {
+//   Users.findOne({ 'userid': id }, function (err, user) {
+//     if (err) { return cb(err); }
+//     cb(null, user);
+//   });
+// });
 
 
 // view engine setup
