@@ -10,28 +10,35 @@ block content
 
 
   .container
-      .row
-          .span12
-              .well
-                  #myCarousel.carousel.slide
-                      #eventCarousel.carousel.slide(data-interval="0")
-                          .carousel-inner.onebyone-carosel
-                                - for (var i = numimages - 1; i >= 0; --i) {
-                                if i == (numimages - 1)
-                                    .item.active
-                                            a(href= images[i])
-                                                img.img-responsive.center-block(src= images[i])
-                                            .text-center= i
-                                else
-                                    .item
-                                            a(href= images[i])
-                                                img.img-responsive.center-block(src= images[i])
-                                            .text-center= i
-  
-                                - }
+      .main_area
+          .row
+              #slider-thumbs.col-sm-6
+                  ul.hide-bullets
+                      - for (var i = numimages - 1; i >= 0; --i) {
+                      li.col-sm-3
+                          a.thumbnail(id='carousel-selector-'+i)
+                              img(src= images[i])
+                      - }
 
-                            a.left.carousel-control(href="#eventCarousel", data-slide="prev")
-                                span.glyphicon.glyphicon-chevron-left
-                            a.right.carousel-control(href="#eventCarousel", data-slide="next")
-                                span.glyphicon.glyphicon-chevron-right
+              .col-sm-6
+                  #slider.col-sm-6
+                      .row
+                          #carousel-bounding-box.col-sm-12
+                              #myCarousel.carousel.slide
+                                  .carousel-inner
+                                      - for (var i = numimages - 1; i >= 0; --i) {
+                                      if i == (numimages - 1)
+                                          .item.active(data-slide-number= i)
+                                              a(href= images[i])
+                                                  img(src= images[i])
+                                      else
+                                          .item(data-slide-number= i)
+                                              a(href= images[i])
+                                                  img(src= images[i])
+                                      - }
+
+                              a.left.carousel-control(href="#eventCarousel", data-slide="prev")
+                                  span.glyphicon.glyphicon-chevron-left
+                              a.right.carousel-control(href="#eventCarousel", data-slide="next")
+                                  span.glyphicon.glyphicon-chevron-right
 
