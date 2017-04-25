@@ -1,19 +1,21 @@
 var mongoose = require('mongoose');
 var dbURI = 'mongodb://localhost:27017/doorcamusers';
+var passportLocalMongoose = require('passport-local-mongoose');
 
 var userSchema = new mongoose.Schema({
-  userid: String,
+  userid: {type: String, unique:true},
   passwd: String,
-  email: {type: String, unique:true},
+  email:  {type: String, unique:true},
   lastLogin: Date
 });
 
+userSchema.plugin(passportLocalMongoose);
 
 // make a connection
 mongoose.connect(dbURI);
 
-// Build/Compile User and Project models
-mongoose.model('User', userSchema);
+// Build/Compile Users models
+mongoose.model('Users', userSchema);
 
 
 mongoose.connection.on('connected', function () {

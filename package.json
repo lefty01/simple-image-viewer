@@ -1,7 +1,8 @@
 {
-  "name": "doorcam",
-  "version": "0.0.0",
+  "name": "doorcam-viewer",
+  "version": "0.0.1",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "start": "node ./bin/www"
   },
@@ -16,7 +17,9 @@
     "serve-favicon": "~2.3.0",
     "express-basic-auth": "1.0.1",
     "express-session": "~1.15.1",
-    "passport": "^0.2.2",
-    "passport-local": "^1.0.0"
+    "passport": "~0.3.2",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.0.0",
+    "chokidar": "~1.6.1"
   }
 }
