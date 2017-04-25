@@ -31,10 +31,9 @@ function get_images(path, callback) {
     if (err) {
       console.log(err);
     } else {
-	  for (var i=0; i<items.length; i++) {
+      for (var i=0; i<items.length; i++) {
         items[i] = 'images/' + items[i];
-	    console.log(items[i]);
-	  }
+      }
     }
     callback(err, items);
   });
@@ -64,10 +63,10 @@ router.post('/register', function(req, res) {
   Users.register(new Users({ userid : req.body.userid }), req.body.passwd, function(err, account) {
     if (err) {
       console.log('register error: ' + err);
-      return res.render('register', { account : account, error: err });
+      return res.render('register', { error: err });
     }
-    console.log('user registered!');
-    res.redirect('/');
+    console.log('user registered: ' + req.user);
+    res.redirect('/login');
   });
 });
 
@@ -85,5 +84,11 @@ router.get('/logout', function(req, res, next) {
   req.logout();
   res.redirect('/');
 });
+
+
+router.delete('/remove/:file', function(req, res, next) {
+    console.log("deleting ... ");
+});
+
 
 module.exports = router;
