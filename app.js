@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var session = require('express-session');
-//var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 //var User = mongoose.model('User');
 
 var db = require('./model/db');
@@ -18,6 +18,7 @@ var db = require('./model/db');
 var routes = require('./routes/index');
 
 var app = express();
+app.set('view options', { pretty: true });
 
 var sessionOpt = {
     secret: 'hund Cat maus',

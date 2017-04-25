@@ -12,18 +12,18 @@ block content
   .container
       .main_area
           .row
-              #slider-thumbs.col-sm-6
+              #slider-thumbs.col-md-6
                   ul.hide-bullets
-                      - for (var i = numimages - 1; i >= 0; --i) {
-                      li.col-sm-3
-                          a.thumbnail(id='carousel-selector-'+i)
+                      - for (var i = numimages - 1, j = 0; i >= 0; --i, ++j) {
+                      li.col-md-3
+                          a.thumbnail(id='carousel-selector-'+j)
                               img(src= images[i])
                       - }
 
-              .col-sm-6
-                  #slider.col-sm-6
+              .col-md-6
+                  #slider.col-md-6
                       .row
-                          #carousel-bounding-box.col-sm-12
+                          #carousel-bounding-box.col-md-12
                               #myCarousel.carousel.slide
                                   .carousel-inner
                                       - for (var i = numimages - 1; i >= 0; --i) {
@@ -37,8 +37,8 @@ block content
                                                   img(src= images[i])
                                       - }
 
-                              a.left.carousel-control(href="#eventCarousel", data-slide="prev")
+                              a.left.carousel-control(href="#myCarousel", role="button", data-slide="prev")
                                   span.glyphicon.glyphicon-chevron-left
-                              a.right.carousel-control(href="#eventCarousel", data-slide="next")
+                              a.right.carousel-control(href="#myCarousel", role="button", data-slide="next")
                                   span.glyphicon.glyphicon-chevron-right
 
