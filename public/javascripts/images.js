@@ -25,6 +25,7 @@ $(document).ready(function () {
       var id = /-(\d+)$/.exec(id_selector)[1];
       console.log(id_selector, id);
       jQuery('#myCarousel').carousel(parseInt(id));
+      $(window).scrollTop(0);
     } catch (e) {
       console.log('Regex failed!', e);
     }

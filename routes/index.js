@@ -53,23 +53,23 @@ router.get('/', function(req, res, next) {
 
 
 
-router.get('/register', function(req, res) {
-    res.render('register', { });
-});
+//router.get('/register', function(req, res) {
+//    res.render('register', { });
+//});
 
-router.post('/register', function(req, res) {
-  console.log('register user: ' + req.body.userid);
-  //crypt.saltHashPassword(req.body.passwd);
-
-  Users.register(new Users({ userid : req.body.userid }), req.body.passwd, function(err, account) {
-    if (err) {
-      console.log('register error: ' + err);
-      return res.render('register', { account : account, error: err });
-    }
-    console.log('user registered!');
-    res.redirect('/');
-  });
-});
+//router.post('/register', function(req, res) {
+//  console.log('register user: ' + req.body.userid);
+//  //crypt.saltHashPassword(req.body.passwd);
+//
+//  Users.register(new Users({ userid : req.body.userid }), req.body.passwd, function(err, account) {
+//    if (err) {
+//      console.log('register error: ' + err);
+//      return res.render('register', { account : account, error: err });
+//    }
+//    console.log('user registered!');
+//    res.redirect('/');
+//  });
+//});
 
 
 router.get('/login', function(req, res, next) {
