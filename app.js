@@ -29,31 +29,25 @@ var sessionOpt = {
 
 
 // passport config
-passport.use(new Strategy(Users.authenticate()));
-passport.serializeUser(Users.serializeUser());
-passport.deserializeUser(Users.deserializeUser());
-
+//passport.use(new LocalStrategy(Users.authenticate()));
+passport.use(Users.createStrategy());
 
 // passport.use(new Strategy(
-//     function(userid, passwd, cb) {
-// 	Users.findOne({ 'userid': userid }, function(err, user) {
-// 	    if (err) { return cb(err); }
-// 	    if (!user) { return cb(null, false); }
-// 	    if (user.passwd != passwd) { return cb(null, false); }
-// 	    return cb(null, user);
-// 	});
+//   function(userid, passwd, cb) {
+//  	Users.findOne({ 'userid': userid }, function(err, user) {
+//  	  if (err) { return cb(err); }
+//  	  if (!user) {
+//         return cb(null, false, { message: 'wrong user/pass' });
+//       }
+//       if (!user.validPassword(passwd)) {
+//         return cb(null, false, { message: 'wrong user/pass' });
+//       }
+//  	  return cb(null, user);
+//  	});
 // }));
 
-// passport.serializeUser(function(user, cb) {
-//   cb(null, user.id);
-// });
-
-// passport.deserializeUser(function(id, cb) {
-//   Users.findOne({ 'userid': id }, function (err, user) {
-//     if (err) { return cb(err); }
-//     cb(null, user);
-//   });
-// });
+passport.serializeUser(Users.serializeUser());
+passport.deserializeUser(Users.deserializeUser());
 
 
 // view engine setup
@@ -69,6 +63,8 @@ app.use(cookieParser());
 app.use(session(sessionOpt));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 app.use('/', routes);

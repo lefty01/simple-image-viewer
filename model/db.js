@@ -5,13 +5,19 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var userSchema = new mongoose.Schema({
   userid: {type: String, unique:true},
   passwd: String,
-  email:  {type: String, unique:true},
-  lastLogin: Date
+  email:  String
 });
 
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose, {
+  usernameField: 'userid',
+  passwordField: 'passwd'
+});
 
 // make a connection
+//mongoose.Promise = global.Promise;
+//assert.equal(query.exec().constructor, global.Promise);
+mongoose.Promise = require('bluebird');
+
 mongoose.connect(dbURI);
 
 // Build/Compile Users models
@@ -37,3 +43,4 @@ process.on('SIGINT', function() {
   });
 });
 
+//module.exports = mongoose.model('User', User);

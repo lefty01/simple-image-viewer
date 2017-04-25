@@ -28,3 +28,10 @@ a {
 .carousel-inner>.item>img, .carousel-inner>.item>a>img {
     width: 100%;
 }
+
+
+label {
+    width: 10%;
+    float: left;
+}
+

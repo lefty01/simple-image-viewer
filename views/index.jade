@@ -8,37 +8,40 @@ block headjs
 
 block content
 
+  if (!user)
+    p You are currently not logged in.
+  else
+    p user: #{user.userid}
 
-  .container
+    .container
       .main_area
-          .row
-              #slider-thumbs.col-md-6
-                  ul.hide-bullets
-                      - for (var i = numimages - 1, j = 0; i >= 0; --i, ++j) {
-                      li.col-md-3
-                          a.thumbnail(id='carousel-selector-'+j)
-                              img(src= images[i])
-                      - }
+        .row
+            .col-md-8
+                #slider.col-md-12
+                    .row
+                        #carousel-bounding-box.col-md-12
+                            #myCarousel.carousel.slide
+                                .carousel-inner
+                                    - for (var i = numimages - 1; i >= 0; --i) {
+                                    if i == (numimages - 1)
+                                        .item.active(data-slide-number= i)
+                                            a(href= images[i])
+                                                img(src= images[i])
+                                    else
+                                        .item(data-slide-number= i)
+                                            a(href= images[i])
+                                                img(src= images[i])
+                                    - }
 
-              .col-md-6
-                  #slider.col-md-6
-                      .row
-                          #carousel-bounding-box.col-md-12
-                              #myCarousel.carousel.slide
-                                  .carousel-inner
-                                      - for (var i = numimages - 1; i >= 0; --i) {
-                                      if i == (numimages - 1)
-                                          .item.active(data-slide-number= i)
-                                              a(href= images[i])
-                                                  img(src= images[i])
-                                      else
-                                          .item(data-slide-number= i)
-                                              a(href= images[i])
-                                                  img(src= images[i])
-                                      - }
+                                a.left.carousel-control(href="#myCarousel", role="button", data-slide="prev")
+                                    span.glyphicon.glyphicon-chevron-left
+                                a.right.carousel-control(href="#myCarousel", role="button", data-slide="next")
+                                    span.glyphicon.glyphicon-chevron-right
 
-                              a.left.carousel-control(href="#myCarousel", role="button", data-slide="prev")
-                                  span.glyphicon.glyphicon-chevron-left
-                              a.right.carousel-control(href="#myCarousel", role="button", data-slide="next")
-                                  span.glyphicon.glyphicon-chevron-right
-
+            #slider-thumbs.col-md-4
+                ul.hide-bullets
+                    - for (var i = numimages - 1, j = 0; i >= 0; --i, ++j) {
+                    li.col-md-3
+                        a.thumbnail(id='carousel-selector-'+j)
+                            img(src= images[i])
+                    - }

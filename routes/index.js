@@ -5,7 +5,8 @@ var Users = mongoose.model('Users');
 var passport = require('passport');
 var fs = require('fs');
 var chokidar = require('chokidar');
-
+//var crypto = require('crypto');
+//var crypt = require('../mycrypt.js')
 
 var watcher = chokidar.watch(path, 'file', {
     ignored: /[\/\\]\./,
@@ -19,6 +20,7 @@ watcher.on('add', function(path) {
 // symlink latest.jpg to path
 // how to trigger page reload ... or actually update img.src content dynamically
 });
+
 
 
 var path = 'public/images';
@@ -41,16 +43,13 @@ function get_images(path, callback) {
 
 
 router.get('/', function(req, res, next) {
-
   get_images(path, function(err, items) {
     if (! err) {
       var size = items.length;
 	res.render('index', { title: 'Doorcam', images: items, numimages: size, user: req.user });
     }
   });
-
 });
-
 
 
 
@@ -59,33 +58,41 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-    Users.register(new Users({ username : req.body.username }), req.body.password, function(err, account) {
-        if (err) {
-            return res.render('register', { account : account });
-        }
+  console.log('register user: ' + req.body.userid);
+  //crypt.saltHashPassword(req.body.passwd);
 
-        passport.authenticate('local')(req, res, function () {
-            res.redirect('/');
-        });
-    });
+  Users.register(new Users({ userid : req.body.userid }), req.body.passwd, function(err, account) {
+    if (err) {
+      console.log('register error: ' + err);
+      return res.render('register', { account : account, error: err });
+    }
+    console.log('user registered!');
+    res.redirect('/');
+//    passport.authenticate('local') (req, res, function () {
+//      res.redirect('/');
+//    });
+
+  });
 });
 
-  router.get('/login', function(req, res) {
-      res.render('login', { user : req.user });
-  });
 
-  router.post('/login', passport.authenticate('local'), function(req, res) {
-      res.redirect('/');
-  });
+router.get('/login', function(req, res, next) {
+  res.render('login', { user : req.user });
+});
 
-  router.get('/logout', function(req, res) {
-      req.logout();
-      res.redirect('/');
-  });
+router.post('/login', passport.authenticate('local'), function(req, res) {
+  console.log('authenticated!!! user: ' + req.user);
+  res.redirect('/');
+});
 
-  router.get('/ping', function(req, res){
-      res.send("pong!", 200);
-  });
+router.get('/logout', function(req, res, next) {
+  req.logout();
+  res.redirect('/');
+});
+
+// router.get('/ping', function(req, res, next) {
+//   res.send("pong!", 200);
+// });
 
 
 module.exports = router;
