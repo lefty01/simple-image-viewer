@@ -43,4 +43,3 @@ process.on('SIGINT', function() {
   });
 });
 
-//module.exports = mongoose.model('User', User);

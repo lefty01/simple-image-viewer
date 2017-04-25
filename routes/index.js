@@ -68,10 +68,6 @@ router.post('/register', function(req, res) {
     }
     console.log('user registered!');
     res.redirect('/');
-//    passport.authenticate('local') (req, res, function () {
-//      res.redirect('/');
-//    });
-
   });
 });
 
@@ -89,10 +85,5 @@ router.get('/logout', function(req, res, next) {
   req.logout();
   res.redirect('/');
 });
-
-// router.get('/ping', function(req, res, next) {
-//   res.send("pong!", 200);
-// });
-
 
 module.exports = router;

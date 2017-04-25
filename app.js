@@ -6,7 +6,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-//var basicAuth = require('express-basic-auth')
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var session = require('express-session');
@@ -31,21 +30,6 @@ var sessionOpt = {
 // passport config
 //passport.use(new LocalStrategy(Users.authenticate()));
 passport.use(Users.createStrategy());
-
-// passport.use(new Strategy(
-//   function(userid, passwd, cb) {
-//  	Users.findOne({ 'userid': userid }, function(err, user) {
-//  	  if (err) { return cb(err); }
-//  	  if (!user) {
-//         return cb(null, false, { message: 'wrong user/pass' });
-//       }
-//       if (!user.validPassword(passwd)) {
-//         return cb(null, false, { message: 'wrong user/pass' });
-//       }
-//  	  return cb(null, user);
-//  	});
-// }));
-
 passport.serializeUser(Users.serializeUser());
 passport.deserializeUser(Users.deserializeUser());
 
