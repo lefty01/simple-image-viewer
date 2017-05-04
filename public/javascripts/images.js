@@ -11,7 +11,7 @@ $(document).ready(function () {
     try {
       var id = /-(\d+)$/.exec(id_selector)[1];
       console.log(id_selector, id);
-      jQuery('#myCarousel').carousel(parseInt(id));
+      $('#myCarousel').carousel(parseInt(id));
       $(window).scrollTop(0);
     } catch (e) {
       console.log('Regex failed!', e);
@@ -23,4 +23,31 @@ $(document).ready(function () {
     $('#carousel-text').html($('#slide-content-'+id).html());
   });
 
+
+    $('.delete_image').on('click', 	deleteImage);
+
 });
+
+
+function deleteImage(event) {
+    event.preventDefault();
+    var deleteme = confirm("really delete image: " + $(this).attr('id'));
+    //console.log('delete? ' + deleteme);
+    if (deleteme) {
+        $.ajax({
+            type: 'DELETE',
+            url: '/remove/' + $(this).attr('id')
+        }).done(function( response ) {
+            // Check for a successful (blank) response
+            if (response.msg === '') {
+            }
+            else {
+                alert('Error: ' + response.msg);
+            }
+        });
+    }
+    else {
+        return false;
+    }
+    return true;
+}
