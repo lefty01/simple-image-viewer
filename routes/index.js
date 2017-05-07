@@ -22,8 +22,8 @@ watcher.on('add', function(path) {
 });
 
 
-
 var path = 'public/images';
+
 
 // fixme: check for readdir error if path not exist ENOENT
 function get_images(path, callback) {
@@ -41,6 +41,19 @@ function get_images(path, callback) {
 };
 
 
+function isAuthenticated(req, res, next) {
+    if (req.user) {
+	return next();
+    }
+    res.redirect('/');
+}
+
+function isAdmin(req, res, next) {
+    if (req.user && (req.user.userid === 'admin')) {
+	return next();
+    }
+    res.redirect('/');
+}
 
 router.get('/', function(req, res, next) {
   if (req.user) {
@@ -93,14 +106,16 @@ router.get('/logout', function(req, res, next) {
 
 
 router.delete('/remove/images/:file', function(req, res, next) {
-    console.log("deleting: " + req.params.file);
-    // req.params.file -> validate!
+    if (req.user && (req.user.userid === 'admin')) {
+	console.log("deleting: " + req.params.file);
+	// req.params.file -> validate!
 
-    fs.unlink('public/images/' + req.params.file, function(err) {
-	res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
-        if (err) return console.log(err);
-        console.log('file deleted successfully');
-    });
+	fs.unlink('public/images/' + req.params.file, function(err) {
+	    res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
+            if (err) return console.log(err);
+            console.log('file deleted successfully');
+	});
+    }
 });
 
 
