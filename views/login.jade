@@ -5,7 +5,10 @@ block headjs
   script(type="text/javascript", src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous")
 
 block content
-  h2 Log In
+  if (user)
+    p already logged in
+  else
+    h2 Log In
 
   form(action="/login",method="post")
     div

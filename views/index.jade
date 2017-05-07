@@ -27,10 +27,15 @@ block content
                                         .item.active(data-slide-number= i)
                                             a(href= images[i])
                                                 img(src= images[i])
+                                            if (user.userid == 'admin')
+                                                .deleteimage(imgname= images[i])
+
                                     else
                                         .item(data-slide-number= i)
                                             a(href= images[i])
                                                 img(src= images[i])
+                                            if (user.userid == 'admin')
+                                                .deleteimage(imgname= images[i])
                                     - }
 
                                 a.left.carousel-control(href="#myCarousel", role="button", data-slide="prev")
@@ -38,9 +43,10 @@ block content
                                 a.right.carousel-control(href="#myCarousel", role="button", data-slide="next")
                                     span.glyphicon.glyphicon-chevron-right
 
+
                         if (user.userid == 'admin')
-                          p admin user logged in
-                          p delete this image?
+                            a(id= images[i], class="deleteme", href="#" ) delete this image?
+
 
             #slider-thumbs.col-md-4
                 ul.hide-bullets

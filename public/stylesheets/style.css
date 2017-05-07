@@ -29,6 +29,10 @@ a {
     width: 100%;
 }
 
+a.deleteme {
+    text-align: center;
+    color: red;
+}
 
 label {
     width: 10%;

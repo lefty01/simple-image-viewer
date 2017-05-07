@@ -22,8 +22,8 @@ watcher.on('add', function(path) {
 });
 
 
-
 var path = 'public/images';
+
 
 // fixme: check for readdir error if path not exist ENOENT
 function get_images(path, callback) {
@@ -33,6 +33,7 @@ function get_images(path, callback) {
     } else {
       for (var i=0; i<items.length; i++) {
         items[i] = 'images/' + items[i];
+	//console.log(items[i]);
       }
     }
     callback(err, items);
@@ -40,14 +41,32 @@ function get_images(path, callback) {
 };
 
 
+function isAuthenticated(req, res, next) {
+    if (req.user) {
+	return next();
+    }
+    res.redirect('/');
+}
+
+function isAdmin(req, res, next) {
+    if (req.user && (req.user.userid === 'admin')) {
+	return next();
+    }
+    res.redirect('/');
+}
 
 router.get('/', function(req, res, next) {
-  get_images(path, function(err, items) {
-    if (! err) {
-      var size = items.length;
+  if (req.user) {
+    get_images(path, function(err, items) {
+      if (! err) {
+        var size = items.length;
 	res.render('index', { title: 'Doorcam', images: items, numimages: size, user: req.user });
-    }
-  });
+      }
+    });
+  } else {
+    console.log("no user logged in");
+    res.render('index', { user: req.user });
+  }
 });
 
 
@@ -63,12 +82,21 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 
 router.get('/logout', function(req, res, next) {
   req.logout();
-  res.redirect('/');
+  res.redirect('/login');
 });
 
 
-router.delete('/remove/:file', function(req, res, next) {
-    console.log("deleting ... ");
+router.delete('/remove/images/:file', function(req, res, next) {
+    if (req.user && (req.user.userid === 'admin')) {
+	console.log("deleting: " + req.params.file);
+	// req.params.file -> validate!
+
+	fs.unlink('public/images/' + req.params.file, function(err) {
+	    res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
+            if (err) return console.log(err);
+            console.log('file deleted successfully');
+	});
+    }
 });
 
 
