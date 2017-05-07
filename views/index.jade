@@ -9,7 +9,7 @@ block headjs
 block content
 
   if (!user)
-    p You are currently not logged in.
+    p invalid
   else
     p user: #{user.userid}
 
@@ -37,6 +37,10 @@ block content
                                     span.glyphicon.glyphicon-chevron-left
                                 a.right.carousel-control(href="#myCarousel", role="button", data-slide="next")
                                     span.glyphicon.glyphicon-chevron-right
+
+                        if (user.userid == 'admin')
+                          p admin user logged in
+                          p delete this image?
 
             #slider-thumbs.col-md-4
                 ul.hide-bullets
