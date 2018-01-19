@@ -34,7 +34,7 @@ function deleteImage(event) {
     var which_img = $('.carousel-inner .item.active .deleteimage').attr('imgname');
     //var which_num = $('.carousel-inner .item.active').attr('data-slide-number');
     console.log('name: ' + which_img);
-    var deleteme = confirm("really delete image: " + which_img);
+    var deleteme = true; //confirm("really delete image: " + which_img);
 
     // update link
     $("a.deleteme").attr("href", which_img);
