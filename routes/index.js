@@ -8,6 +8,8 @@ var chokidar = require('chokidar');
 //var crypto = require('crypto');
 //var crypt = require('../mycrypt.js')
 
+const path = 'public/images';
+
 var watcher = chokidar.watch(path, 'file', {
     ignored: /[\/\\]\./,
     persistent: true,
@@ -22,7 +24,7 @@ watcher.on('add', function(path) {
 });
 
 
-var path = 'public/images';
+
 
 
 // fixme: check for readdir error if path not exist ENOENT
@@ -98,6 +100,24 @@ router.delete('/remove/images/:file', function(req, res, next) {
 	});
     }
 });
+
+//router.get('/register', function(req, res) {
+//    res.render('register', { user: req.user });
+//});
+
+//router.post('/register', function(req, res) {
+//  console.log('register user: ' + req.body.userid);
+//  //crypt.saltHashPassword(req.body.passwd);
+//
+//  Users.register(new Users({ userid : req.body.userid }), req.body.passwd, function(err, account) {
+//    if (err) {
+//      console.log('register error: ' + err);
+//      return res.render('register', { error: err });
+//    }
+//    console.log('user registered: ' + req.user);
+//    res.redirect('/login');
+//  });
+//});
 
 
 module.exports = router;
