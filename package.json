@@ -16,7 +16,7 @@
     "express": "^4.16.4",
     "express-basic-auth": "^1.2.0",
     "express-session": "^1.15.1",
-    "mongoose": "^5.3.4",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "nconf": "^0.10.0",
     "passport": "~0.3.2",
