@@ -24,7 +24,7 @@
     "micromatch": "^4.0.2",
     "minimist": "^1.2.6",
     "mkdirp": "^1.0.3",
-    "mongoose": "^5.9.7",
+    "mongoose": "^5.13.15",
     "morgan": "^1.10.0",
     "nconf": "^0.11.4",
     "node-pre-gyp": "^0.14.0",
