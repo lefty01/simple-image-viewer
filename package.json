@@ -21,7 +21,7 @@
     "express-basic-auth": "^1.2.0",
     "express-session": "^1.17.0",
     "kind-of": "^6.0.3",
-    "micromatch": "^4.0.2",
+    "micromatch": "^4.0.8",
     "minimist": "^1.2.6",
     "mkdirp": "^1.0.3",
     "mongoose": "^5.13.20",
