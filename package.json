@@ -12,7 +12,7 @@
     "anymatch": "^3.1.1",
     "babel-cli": "^6.26.0",
     "bluebird": "^3.7.2",
-    "body-parser": "^2.3.0",
+    "body-parser": "^2.4.0",
     "braces": "^3.0.3",
     "chokidar": "^3.3.1",
     "cookie-parser": "^1.4.5",
